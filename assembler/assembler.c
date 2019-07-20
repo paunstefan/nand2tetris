@@ -195,7 +195,7 @@ int main(int argc, char **argv){
 	}
 
 	bin_fp = fopen(argv[2], "w");
-	if(asm_fp == NULL){
+	if(bin_fp == NULL){
 		printf("Cannot create binary file.\n");
 		exit(1);
 	}
