@@ -9,8 +9,10 @@
 
 
 
-/*
+/**
 	Removes all whitespace and comments from a line.
+
+	@param line: the line string which will be edited in place
 */
 void strip(char** line){
 	char *ln = (char*)malloc(sizeof(char) * 100);
@@ -32,8 +34,12 @@ void strip(char** line){
 
 }
 
-/*
-	Returns the index of a certain character in a line.
+/**
+	Returns the first index of a character in a string.
+
+	@param line: the string
+	@param ch: the character
+	@return the index
 */
 int index_of(char* line, char ch){
 	for(int i = 0; line[i] != '\0'; i++){
@@ -45,8 +51,11 @@ int index_of(char* line, char ch){
 }
 
 
-/*
-	Returns the type of command.
+/**
+	Returns the command type.
+
+	@param line: the command
+	@return the command
 */
 enum cmd_type process(char** line){
 	enum cmd_type command_type;
@@ -65,8 +74,15 @@ enum cmd_type process(char** line){
 	return command_type;
 }
 
-/*
+
+/**
 	Constructs the binary instruction from an input command line.
+
+	@param line: the command
+	@param binary: the string where to write the instruction
+	@param type: the command type
+	@param free_mem: the first free memory space
+	@return true if it is a valid instruction, else false
 */
 bool get_binary(char* line, char** binary, enum cmd_type type, uint16_t *free_mem){
 	//initialize();

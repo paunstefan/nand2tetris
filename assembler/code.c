@@ -4,8 +4,11 @@
 #include <stdlib.h>
 
 
-/*
+/**
 	Transforms an integer into its string binary representation.
+
+	@param value: integer value
+	@return the string representation
 */
 char* number2string(uint16_t value){
 	char* bin = (char*)malloc(sizeof(char) * 17);
@@ -25,8 +28,11 @@ char* number2string(uint16_t value){
 
 }
 
-/*
+/**
 	Creates an A instruction.
+
+	@param value: parameter of the A instruction
+	@param binary: string where to write the instruction
 */
 void compile_A(uint16_t value, char** binary){
 	char* str = number2string(value);
@@ -35,8 +41,11 @@ void compile_A(uint16_t value, char** binary){
 	free(str);
 }
 
-/*
+/**
 	Creates the JMP instruction.
+
+	@param value: parameter of the A instruction
+	@param binary: string where to write the instruction
 */
 void get_jmp(uint16_t value, char** binary){
 	char* str = number2string(value);
@@ -45,8 +54,12 @@ void get_jmp(uint16_t value, char** binary){
 	free(str);
 }
 
-/*
+
+/**
 	Creates the DEST instruction.
+
+	@param value: parameter of the A instruction
+	@param binary: string where to write the instruction
 */
 void get_dst(uint16_t value, char** binary){
 	char* str = number2string(value);
@@ -55,8 +68,12 @@ void get_dst(uint16_t value, char** binary){
 	free(str);
 }
 
-/*
+
+/**
 	Creates the COMP instruction.
+
+	@param value: parameter of the A instruction
+	@param binary: string where to write the instruction
 */
 void get_comp(uint16_t value, char** binary){
 	char* str = number2string(value);

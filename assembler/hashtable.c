@@ -6,10 +6,11 @@
 #include "hashtable.h"
 
 
-
-
-/*
+/**
 	Creates the HashTable structure.
+
+	@param ht: the hastable pointer
+	@param dim: the wanted dimension
 */
 void init_hash_table(struct HashTable* ht, size_t dim){
 	ht->size = dim;
@@ -18,8 +19,13 @@ void init_hash_table(struct HashTable* ht, size_t dim){
 }
 
 
-/*
+
+/**
 	Creates the Label structure which holds the actual information.
+
+	@param name: the label name
+	@param addr: the label address
+	@return the Label structure
 */
 Label* create_label(char* name, uint16_t addr){
 	Label* temp = (Label*)malloc(sizeof(Label));
@@ -30,8 +36,12 @@ Label* create_label(char* name, uint16_t addr){
 }
 
 
-/*
+/**
 	Simple hashing function for the name. (can be improved)
+
+	@param key: the label name
+	@param size: size of the table
+	@return the hash
 */
 uint16_t hash(char* key, size_t size){
 	uint16_t h = 0;
@@ -44,8 +54,12 @@ uint16_t hash(char* key, size_t size){
 }
 
 
-/*
+/**
 	Creates a list node.
+
+	@param name: the label name
+	@param addr: the label address
+	@return the ListNode structure
 */
 struct ListNode* create_node(char* name, uint16_t addr){
 	Label *label = create_label(name, addr);
@@ -56,8 +70,13 @@ struct ListNode* create_node(char* name, uint16_t addr){
 }
 
 
-/*
+/**
 	Inserts a new node into the list.
+
+	@param list: pointer to the list
+	@param name: the label name
+	@param addr: the label address
+	@return the new pointer to the list
 */
 struct ListNode* insert_node(struct ListNode* list, char* name, uint16_t addr){
 	struct ListNode *node = create_node(name, addr);
@@ -79,9 +98,13 @@ struct ListNode* insert_node(struct ListNode* list, char* name, uint16_t addr){
 }
 
 
-/*
+/**
 	Inserts a new element into the HashTable struct. 
 	It uses chaining for collision avoidance (using a circular linked list).
+
+	@param ht: the hashtable structure
+	@param name: the label name
+	@param addr: the label address
 */
 void insert_HT(struct HashTable ht, char* name, uint16_t addr){
 	uint16_t position = hash(name, ht.size);
@@ -120,8 +143,13 @@ void print_HT(struct HashTable ht){
 }
 
 
-/*
+
+/**
 	Checks if an item is present in the table.
+
+	@param ht: the hashtable structure
+	@param name: the label name
+	@return true if it is present, else false
 */
 bool is_item(struct HashTable ht, char* name){
 	uint16_t position = hash(name, ht.size);
@@ -144,8 +172,12 @@ bool is_item(struct HashTable ht, char* name){
 }
 
 
-/*
+/**
 	Returns the value from the HashTable associated with a given key. Returns -1 if the item does not exist.
+
+	@param ht: the hashtable structure
+	@param name: the label name
+	@return value of the label, -1 if it does not exist
 */
 int32_t get_item(struct HashTable ht, char* name){
 	int32_t addr = -1;

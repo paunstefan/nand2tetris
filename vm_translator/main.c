@@ -5,11 +5,38 @@
 #include <string.h>
 #include "parser.h"
 #include "codewriter.h"
+#include "global.h"
 
+
+int jmp_c;
+char *current_function;
+
+#define set_SP "@256\nD=A\n@SP\nM=D\n"
+
+/**
+	Edits the current_function global variable.
+
+	@param f: the current function name
+*/
+void set_current(char *f){
+	free(current_function);
+	current_function = (char*)malloc(strlen(f) + 1);
+	strcpy(current_function, f);
+}
+
+/**
+	Prints the help string.
+*/
 void help(){
 	printf("Usage: ./vm_translator [VM file/directory] [output file]\n");
 }
 
+/**
+	Checks if a file is a directory.
+
+	@param name: file name
+	@return true if it is a directory, else false
+*/
 bool is_dir(char *name){
 	int extension = strlen(name) - 3;
 	if(strcmp(name+extension, ".vm") == 0){
@@ -18,6 +45,13 @@ bool is_dir(char *name){
 	return true;
 }
 
+/**
+	Reads the files in a directory.
+
+	@param directory: the directory name
+	@param files: array of strings where the names will be written
+	@return the number of files in the directory
+*/
 int read_dir(char *directory, char ***files){
 	int count = 0;
 	struct dirent *p_dirent;
@@ -49,6 +83,8 @@ int main(int argc, char **argv){
 		exit(1);
 	}
 
+	set_current("_default");
+
 	char **files = NULL;
 	int no_files = 0;
 
@@ -57,6 +93,15 @@ int main(int argc, char **argv){
 		if(no_files == 0){
 			printf("No VM files found.");
 			exit(1);
+		}
+
+		for(int i = 0; i < no_files; i++){
+
+			char *file = (char*)malloc(64);
+			strcpy(file, argv[1]);
+			strcpy(file + strlen(argv[1]), "/");
+			file = strcat(file, files[i]);
+			files[i] = file;
 		}
 	}
 	else{
@@ -81,6 +126,7 @@ int main(int argc, char **argv){
 	}
 
 	for(int i = 0; i < no_files; i++){
+		jmp_c = 0;
 		vm_fp = fopen(files[i], "r");
 		if(vm_fp == NULL){
 			printf("Cannot open VM file %s.\n", files[i]);
@@ -93,10 +139,26 @@ int main(int argc, char **argv){
 
 		int line_count = 0;
 
+		// bootstrap code
+		if(no_files > 1){
+			fprintf(asm_fp, "%s", set_SP);
+
+			char **boot_tokens = NULL;
+			char *l = (char*)malloc(16);
+			strcpy(l, "call Sys.init 0");
+			tokenize(l, &boot_tokens);
+
+			char *bootstrap = NULL;
+			compile(boot_tokens, &bootstrap, files[0]);
+			fprintf(asm_fp, "%s", bootstrap);
+			free(l);
+			free(bootstrap);
+		}
+
 		while((read = getline(&line, &len, vm_fp)) != -1){
 			line_count++;
 			strip_comments(&line);
-
+			fprintf(asm_fp, "// %s\n", line);
 			char **tokens = NULL;
 			int no_tokens = tokenize(line, &tokens);
 
@@ -105,12 +167,17 @@ int main(int argc, char **argv){
 			}
 
 			char *instructions = NULL;
-			int stat = compile(tokens, &line, files[i]);
+			int stat = compile(tokens, &instructions, files[i]);
 			if(stat == -1){
-				printf("Error in %s:%d.", files[i], line_count);
+				printf("Error in %s:%d.\n", files[i], line_count);
+				remove(argv[2]);
+				exit(1);
 			}
+			printf("%s", instructions);
+			fprintf(asm_fp, "%s", instructions);
+			free(instructions);
 
-			//write to file
+			free(tokens);
 
 		}
 

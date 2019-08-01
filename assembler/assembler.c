@@ -12,6 +12,9 @@ struct HashTable jmp_table;
 struct HashTable comp_table;
 struct HashTable symbol_table;
 
+/**
+	Initializes the tables with the standard values.
+*/
 void initialize(){
 	init_hash_table(&dest_table, 8);
 	init_hash_table(&jmp_table, 8);
@@ -95,8 +98,11 @@ void help(){
 	printf("Usage: ./assembler [ASM file] [output file]\n");
 }
 
-/*
+
+/**
 	Parses the file to add all symbols to the symbol table.
+
+	@param asm_fp: assembly file pointer
 */
 void first_pass(FILE* asm_fp){
 	char *line = NULL;
@@ -140,6 +146,13 @@ void first_pass(FILE* asm_fp){
 
 /*
 	Parses the file to write the machine code.
+*/
+/**
+	Parses the file to write the machine code.
+
+	@param asm_fp: assembly file pointer
+	@param bin_fp: binary file pointer
+	@param argv: the commnand line arguments
 */
 void second_pass(FILE* asm_fp, FILE* bin_fp, char** argv){
 	char *line = NULL;

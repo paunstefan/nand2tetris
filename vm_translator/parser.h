@@ -19,5 +19,7 @@ enum command_t {
 void strip_comments(char **line);
 int tokenize(char *line, char ***tokens);
 enum command_t get_command_type(char **tokens);
+int check_label(char *label);
+int index_of(char* line, char ch);
 
 #endif
