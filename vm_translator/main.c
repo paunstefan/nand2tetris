@@ -158,7 +158,6 @@ int main(int argc, char **argv){
 		while((read = getline(&line, &len, vm_fp)) != -1){
 			line_count++;
 			strip_comments(&line);
-			fprintf(asm_fp, "// %s\n", line);
 			char **tokens = NULL;
 			int no_tokens = tokenize(line, &tokens);
 

@@ -264,7 +264,6 @@ int write_return(char **tokens, char **instruction){
 						"A=D\nD=M\n@THAT\nM=D\n@R13\nD=M\n@2\nD=D-A\nA=D\nD=M\n@THIS\nM=D\n@R13\nD=M\n@3\nD=D-A\nA=D\nD=M\n@ARG\n"\
 						"M=D\n@R13\nD=M\n@4\nD=D-A\nA=D\nD=M\n@LCL\nM=D\n@R14\nA=M\n0;JMP\n";
 	wr = snprintf((*instruction), 512, format, POP_D);
-	//pop(&current_function);
 	return wr;
 }
 
