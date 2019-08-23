@@ -6,8 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#ifndef HASHTABLE_H
-#define HASHTABLE_H
+#pragma once
 
 struct HashTable{
 	struct ListNode** buckets;
@@ -24,10 +23,43 @@ struct ListNode{
 	struct ListNode* next;
 };
 
-void init_hash_table(struct HashTable* ht, size_t dim);
-void insert_HT(struct HashTable ht, char* name, uint16_t addr);
-void print_HT(struct HashTable ht);
-bool is_item(struct HashTable ht, char* name);
-int32_t get_item(struct HashTable ht, char* name);
+/**
+	Creates the HashTable structure.
 
-#endif
+	@param ht: the hastable pointer
+	@param dim: the wanted dimension
+*/
+void init_hash_table(struct HashTable* ht, size_t dim);
+
+/**
+	Inserts a new element into the HashTable struct. 
+	It uses chaining for collision avoidance (using a circular linked list).
+
+	@param ht: the hashtable structure
+	@param name: the label name
+	@param addr: the label address
+*/
+void insert_HT(struct HashTable ht, char* name, uint16_t addr);
+
+/*
+	Prints all elements in a list.
+*/
+void print_HT(struct HashTable ht);
+
+/**
+	Checks if an item is present in the table.
+
+	@param ht: the hashtable structure
+	@param name: the label name
+	@return true if it is present, else false
+*/
+bool is_item(struct HashTable ht, char* name);
+
+/**
+	Returns the value from the HashTable associated with a given key. Returns -1 if the item does not exist.
+
+	@param ht: the hashtable structure
+	@param name: the label name
+	@return value of the label, -1 if it does not exist
+*/
+int32_t get_item(struct HashTable ht, char* name);

@@ -101,7 +101,9 @@ int main(int argc, char **argv){
 			strcpy(file, argv[1]);
 			strcpy(file + strlen(argv[1]), "/");
 			file = strcat(file, files[i]);
+			char *temp = files[i];
 			files[i] = file;
+			free(temp);
 		}
 	}
 	else{
@@ -109,11 +111,6 @@ int main(int argc, char **argv){
 		files[0] = (char*)malloc(strlen(argv[1]) + 1);
 		strcpy(files[0], argv[1]);
 		no_files = 1;
-	}
-
-
-	for(int i = 0; i < no_files; i++){
-		printf("%s\n", files[i]);
 	}
 
 	FILE* vm_fp;
