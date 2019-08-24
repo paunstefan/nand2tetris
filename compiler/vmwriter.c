@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
-
+/**
+	Here are the functions that generate the VM stack commands.
+*/
 
 void write_push(char *segment, uint16_t index, FILE *fp){
 	fprintf(fp, "push %s %d\n", segment, index);

@@ -66,6 +66,9 @@ int read_dir(char *directory, char ***files){
 		if(strcmp(p_dirent->d_name, ".") == 0 || strcmp(p_dirent->d_name, "..") == 0){
 			continue;
 		}
+		if(strcmp(p_dirent->d_name + (strlen(p_dirent->d_name) - 2), "vm")){
+			continue;
+		}
 		count++;
 		(*files) = (char**)realloc((*files), sizeof(char*) * count);
 		(*files)[count-1] = (char*)malloc(strlen(p_dirent->d_name) + 1);

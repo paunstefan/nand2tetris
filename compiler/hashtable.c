@@ -291,7 +291,6 @@ void clear_symbol(struct ListNode *ln){
 		free(ln->info->name);
 		free(ln->info->type);
 		free(ln->info);
-		//free(ln->next);
 	}
 }
 
@@ -307,11 +306,12 @@ void clear_ht(struct HashTable *ht){
 		for(int i = 0; i < ht->size; i++){
 			if(ht->buckets[i]){
 				struct ListNode *temp = ht->buckets[i];
+				struct ListNode *temp2 = temp;
 				do{
 					clear_symbol(temp);
 					temp = temp->next;
 				}while(temp != ht->buckets[i]);
-
+				free(temp2);
 				ht->buckets[i] = NULL;
 			}
 		}
@@ -321,31 +321,3 @@ void clear_ht(struct HashTable *ht){
 		ht->count[i] = 0;
 	}
 }
-
-
-// int main(){
-// 	struct HashTable h;
-// 	init_hash_table(&h, 32);
-
-// 	insert_HT(&h, "ABC", "t1", STATIC);
-// 	insert_HT(&h, "ABCD", "t5", STATIC);
-// 	insert_HT(&h, "XYZ", "t2", ARG);
-
-// 	printf("(static count: %d)\n", get_var_count(h, STATIC));
-// 	printf("%d\n", get_kind(h, "ABC"));
-// 	printf("%s\n", get_type(h, "ABCD"));
-// 	printf("%d\n", get_index(h, "XYZ"));
-
-// 	print_HT(h);
-
-// 	clear_ht(&h);
-// 	printf("-----------------------\n");
-// 	print_HT(h);
-// 	printf("-----------------------\n");
-// 	insert_HT(&h, "ABC", "t1", STATIC);
-// 	insert_HT(&h, "ABCD", "t5", STATIC);
-// 	insert_HT(&h, "XYZ", "t2", ARG);
-// 	print_HT(h);
-
-// 	return 0;
-// }

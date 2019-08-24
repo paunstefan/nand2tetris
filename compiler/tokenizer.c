@@ -6,6 +6,10 @@
 #include <ctype.h>
 #include "tokenizer.h"
 
+/**
+	Text processing functions, used for tokenizing the input file.
+*/
+
 char keywords[21][12] = {
 						"class",
 						"constructor",

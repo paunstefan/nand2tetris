@@ -3,6 +3,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+/**
+	Text processing functions, used for tokenizing the input file.
+*/
+
 enum token_t {
 	KEYWORD,
 	SYMBOL,
