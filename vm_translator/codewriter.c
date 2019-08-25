@@ -324,4 +324,6 @@ int compile(char **tokens, char **instruction, char *file){
 			return -1;
 	}
 
+	return -1;
+
 }

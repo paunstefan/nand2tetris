@@ -99,8 +99,6 @@ void compile_class_var_dec(char **tokens, FILE* fp){
 void compile_subroutine_dec(char **tokens, FILE* fp){
 	enum keyword_t subroutine_type;
 	char *full_sub_name = NULL;
-	uint16_t localNo = 0;
-	bool is_void = 0;
 
 	if(keyword_type(tokens[token_index]) == CONSTRUCTOR){
 		subroutine_type = CONSTRUCTOR;
@@ -117,7 +115,6 @@ void compile_subroutine_dec(char **tokens, FILE* fp){
 
 	if(token_type(tokens[token_index]) == KEYWORD){
 		// compile void
-		is_void = 1;
 		token_index++;
 	}
 	else{

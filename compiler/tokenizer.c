@@ -271,6 +271,8 @@ enum keyword_t keyword_type(char *token){
 	else if(strcmp(token, "this") == 0){
 		return THIS;
 	}
+
+	return 0;
 }
 
 /**

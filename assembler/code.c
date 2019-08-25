@@ -16,7 +16,7 @@ char* number2string(uint16_t value){
 	bin[16] = '\0';
 	int index = 15;
 	while(index){
-		if(value & 1 == 1){
+		if((value & 1) == 1){
 			bin[index] = '1';
 		}
 
