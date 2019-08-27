@@ -185,6 +185,7 @@ int main(int argc, char **argv){
 			exit(1);
 		}
 
+
 		//tk_to_xml(vm_fp, token_c, tokens);
 		compile_class(tokens, vm_fp);
 

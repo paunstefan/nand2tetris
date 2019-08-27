@@ -400,7 +400,7 @@ void compile_expression(char **tokens, FILE* fp){
 	compile_term(tokens, fp);
 
 	// compile operations
-	if(is_op(tokens[token_index])){
+	while(is_op(tokens[token_index])){
 		if(tokens[token_index][0] == '+'){
 			fprintf(fp, "<symbol> %s </symbol>\n", tokens[token_index]);
 		}
@@ -543,7 +543,7 @@ void compile_subroutine_call(char **tokens, FILE* fp){
 
 }
 
-void compile_expression_list(char **tokens, FILE* fp){
+uint16_t compile_expression_list(char **tokens, FILE* fp){
 	fprintf(fp, "<expressionList>\n");
 
 	if(tokens[token_index][0] != ')'){

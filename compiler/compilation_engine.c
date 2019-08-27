@@ -438,7 +438,7 @@ void compile_expression(char **tokens, FILE* fp){
 	compile_term(tokens, fp);
 
 	// compile operations
-	if(is_op(tokens[token_index])){
+	while(is_op(tokens[token_index])){
 		op = tokens[token_index][0];
 		token_index++;
 
